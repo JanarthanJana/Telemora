@@ -1,0 +1,535 @@
+import { Asset, AnomalyInvestigation, EdgeGateway, TelemetryPoint } from '../types';
+
+export const MARQUEE_ITEMS = [
+  'ASSET INTELLIGENCE',
+  'TIME-SERIES TELEMETRY',
+  'CONDITION MONITORING',
+  'ANOMALY INVESTIGATION',
+  'EDGE TELEMETRY',
+  'SIGNAL QUALITY',
+  'MAINTENANCE CONTEXT',
+  'ENGINEERING DECISION SUPPORT',
+];
+
+export const ASSETS_DATA: Asset[] = [
+  {
+    id: 'PUMP-204',
+    name: 'Boiler Feed Pump 204',
+    code: 'PUMP-204',
+    type: 'Centrifugal High-Pressure Pump',
+    plant: 'PLANT A (Midwest Chemical)',
+    line: 'PRODUCTION LINE 04',
+    state: 'RUNNING',
+    condition: 'REVIEW',
+    quality: 98.7,
+    runtimeHours: 4218,
+    lastEvent: '14:21:08',
+    lastEventDescription: 'High harmonic vibration excursion on drive-end bearing',
+    sensors: [
+      {
+        id: 'SENS-204-VIB',
+        name: 'Vibration DE Bearing',
+        type: 'Vibration',
+        unit: 'mm/s RMS',
+        currentValue: 7.82,
+        nominalRange: [1.2, 4.5],
+        sampleRate: '1.0 kHz',
+        quality: 98.4,
+        status: 'DEVIATION',
+        lastUpdated: '14:21:08',
+      },
+      {
+        id: 'SENS-204-TMP',
+        name: 'Bearing Temp',
+        type: 'Temperature',
+        unit: '°C',
+        currentValue: 74.2,
+        nominalRange: [40, 68],
+        sampleRate: '10 Hz',
+        quality: 99.1,
+        status: 'ATTENTION',
+        lastUpdated: '14:21:05',
+      },
+      {
+        id: 'SENS-204-PRS',
+        name: 'Discharge Pressure',
+        type: 'Pressure',
+        unit: 'bar',
+        currentValue: 42.1,
+        nominalRange: [38.0, 45.0],
+        sampleRate: '100 Hz',
+        quality: 99.8,
+        status: 'NORMAL',
+        lastUpdated: '14:21:08',
+      },
+      {
+        id: 'SENS-204-FLW',
+        name: 'Suction Flow Rate',
+        type: 'Flow',
+        unit: 'm³/h',
+        currentValue: 318.5,
+        nominalRange: [290, 350],
+        sampleRate: '50 Hz',
+        quality: 98.9,
+        status: 'NORMAL',
+        lastUpdated: '14:21:06',
+      },
+      {
+        id: 'SENS-204-AMP',
+        name: 'Motor Current',
+        type: 'Motor Current',
+        unit: 'Amps',
+        currentValue: 142.6,
+        nominalRange: [110, 150],
+        sampleRate: '200 Hz',
+        quality: 99.3,
+        status: 'NORMAL',
+        lastUpdated: '14:21:07',
+      },
+    ],
+    maintenanceHistory: [
+      {
+        id: 'MNT-891',
+        date: 'JUL 28',
+        title: 'Inspection completed',
+        type: 'INSPECTION',
+        technician: 'R. Kowalski (Level III CAT)',
+        notes: 'Routine quarterly mechanical seal and baseline vibration survey logged. Baseline vibration 2.1 mm/s.',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'MNT-904',
+        date: 'AUG 04',
+        title: 'Bearing maintenance',
+        type: 'MAINTENANCE',
+        technician: 'Shift Maintenance Team B',
+        notes: 'Grease replenishment on outboard roller bearings per OEM schedule. Re-torqued mounting flanges.',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'MNT-922',
+        date: 'AUG 16',
+        title: 'Vibration trend increased',
+        type: 'TREND',
+        notes: '1X and 2X rotational speed vibration harmonic amplitudes climbed by +38% over 72-hour sliding window.',
+        status: 'PENDING_REVIEW',
+      },
+      {
+        id: 'MNT-945',
+        date: 'AUG 21',
+        title: 'Condition signal detected',
+        type: 'CONDITION_SIGNAL',
+        notes: 'Harmonic deviation signature logged across combined vibration (7.82 mm/s) and bearing temp (+6.2°C).',
+        status: 'FLAGGED',
+      },
+      {
+        id: 'MNT-960',
+        date: 'AUG 27',
+        title: 'Engineering review',
+        type: 'ENGINEERING_REVIEW',
+        technician: 'Assigned: Plant Reliability Lead',
+        notes: 'Engineering assessment scheduled for next planned line turnover. Acoustic lubrication check prioritized.',
+        status: 'PENDING_REVIEW',
+      },
+    ],
+  },
+  {
+    id: 'MOTOR-112',
+    name: 'Induction Drive Motor 112',
+    code: 'MOTOR-112',
+    type: '3-Phase AC Induction Motor 350kW',
+    plant: 'PLANT A (Midwest Chemical)',
+    line: 'PRODUCTION LINE 04',
+    state: 'RUNNING',
+    condition: 'REVIEW',
+    quality: 99.2,
+    runtimeHours: 6840,
+    lastEvent: '14:18:42',
+    lastEventDescription: 'Subtle stator winding temperature asymmetry logged during ramp-up',
+    sensors: [
+      {
+        id: 'SENS-112-AMP',
+        name: 'Phase A/B/C Current',
+        type: 'Motor Current',
+        unit: 'Amps',
+        currentValue: 138.4,
+        nominalRange: [100, 160],
+        sampleRate: '1.0 kHz',
+        quality: 99.4,
+        status: 'NORMAL',
+        lastUpdated: '14:18:42',
+      },
+      {
+        id: 'SENS-112-RPM',
+        name: 'Shaft Speed',
+        type: 'RPM',
+        unit: 'RPM',
+        currentValue: 1488,
+        nominalRange: [1450, 1500],
+        sampleRate: '500 Hz',
+        quality: 99.8,
+        status: 'NORMAL',
+        lastUpdated: '14:18:40',
+      },
+      {
+        id: 'SENS-112-TMP',
+        name: 'Winding Temp Phase U',
+        type: 'Temperature',
+        unit: '°C',
+        currentValue: 88.5,
+        nominalRange: [50, 82],
+        sampleRate: '10 Hz',
+        quality: 98.7,
+        status: 'DEVIATION',
+        lastUpdated: '14:18:38',
+      },
+      {
+        id: 'SENS-112-VIB',
+        name: 'Axial Vibration',
+        type: 'Vibration',
+        unit: 'mm/s RMS',
+        currentValue: 3.45,
+        nominalRange: [0.8, 3.8],
+        sampleRate: '1.0 kHz',
+        quality: 99.0,
+        status: 'NORMAL',
+        lastUpdated: '14:18:41',
+      },
+    ],
+    maintenanceHistory: [
+      {
+        id: 'MNT-880',
+        date: 'JUN 15',
+        title: 'Thermal Imaging Audit',
+        type: 'INSPECTION',
+        technician: 'Predictive Tech Group',
+        notes: 'FLIR audit showed uniform heat dissipation across all stator slots.',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'MNT-915',
+        date: 'AUG 11',
+        title: 'Phase Insulation Resistance Check',
+        type: 'MAINTENANCE',
+        technician: 'Electrical Lead M. Chen',
+        notes: 'Megger insulation values measured > 500 MΩ. Clean pass.',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'MNT-952',
+        date: 'AUG 25',
+        title: 'Phase U Thermal Drift Observed',
+        type: 'CONDITION_SIGNAL',
+        notes: 'Phase U winding steady-state operating temperature elevated by +6.5°C under nominal 80% load.',
+        status: 'FLAGGED',
+      },
+    ],
+  },
+  {
+    id: 'COMP-031',
+    name: 'Centrifugal Compressor 031',
+    code: 'COMP-031',
+    type: 'Multi-Stage Turbo Compressor',
+    plant: 'PLANT A (Midwest Chemical)',
+    line: 'PRODUCTION LINE 05',
+    state: 'IDLE',
+    condition: 'NORMAL',
+    quality: 97.4,
+    runtimeHours: 12450,
+    lastEvent: '13:55:12',
+    lastEventDescription: 'Unit transitioned into warm standby following batch recipe completion',
+    sensors: [
+      {
+        id: 'SENS-031-PRS',
+        name: 'Stage 2 Interstage Pressure',
+        type: 'Pressure',
+        unit: 'bar',
+        currentValue: 1.05,
+        nominalRange: [0.9, 14.5],
+        sampleRate: '100 Hz',
+        quality: 98.2,
+        status: 'NORMAL',
+        lastUpdated: '13:55:12',
+      },
+      {
+        id: 'SENS-031-TMP',
+        name: 'Lube Oil Sump Temp',
+        type: 'Temperature',
+        unit: '°C',
+        currentValue: 46.8,
+        nominalRange: [35, 55],
+        sampleRate: '10 Hz',
+        quality: 99.5,
+        status: 'NORMAL',
+        lastUpdated: '13:55:10',
+      },
+      {
+        id: 'SENS-031-VIB',
+        name: 'Rotor Radial Orbit',
+        type: 'Vibration',
+        unit: 'µm pk-pk',
+        currentValue: 12.1,
+        nominalRange: [5, 35],
+        sampleRate: '2.0 kHz',
+        quality: 96.8,
+        status: 'NORMAL',
+        lastUpdated: '13:55:00',
+      },
+    ],
+    maintenanceHistory: [
+      {
+        id: 'MNT-860',
+        date: 'MAY 19',
+        title: 'Major Overhaul & Dry Gas Seal Replacement',
+        type: 'MAINTENANCE',
+        technician: 'OEM Field Service',
+        notes: 'Complete rotor re-balancing, dynamic seal pack replacement, lube filter change.',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'MNT-930',
+        date: 'AUG 18',
+        title: 'Lube Oil Laboratory Analysis',
+        type: 'INSPECTION',
+        technician: 'Spectro Analytical Lab',
+        notes: 'ISO cleanliness rating 15/13/10. Zero metallic wear particulates detected.',
+        status: 'COMPLETED',
+      },
+    ],
+  },
+  {
+    id: 'FAN-082',
+    name: 'Induced Draft Fan 082',
+    code: 'FAN-082',
+    type: 'Heavy Radial Induced Draft Blower',
+    plant: 'PLANT A (Midwest Chemical)',
+    line: 'PRODUCTION LINE 05',
+    state: 'RUNNING',
+    condition: 'INVESTIGATE',
+    quality: 91.3,
+    runtimeHours: 8910,
+    lastEvent: '14:12:30',
+    lastEventDescription: 'Elevated 1X imbalance spectral spike detected with intermittent packet drop on Gateway 03',
+    sensors: [
+      {
+        id: 'SENS-082-VIB',
+        name: 'Overhung Impeller Vibration',
+        type: 'Vibration',
+        unit: 'mm/s RMS',
+        currentValue: 9.42,
+        nominalRange: [1.5, 5.0],
+        sampleRate: '1.0 kHz',
+        quality: 90.8,
+        status: 'DEVIATION',
+        lastUpdated: '14:12:30',
+      },
+      {
+        id: 'SENS-082-TMP',
+        name: 'Inboard Pillow Block Temp',
+        type: 'Temperature',
+        unit: '°C',
+        currentValue: 81.4,
+        nominalRange: [40, 70],
+        sampleRate: '10 Hz',
+        quality: 93.4,
+        status: 'ATTENTION',
+        lastUpdated: '14:12:28',
+      },
+      {
+        id: 'SENS-082-FLW',
+        name: 'Exhaust Stack Velocity',
+        type: 'Flow',
+        unit: 'm/s',
+        currentValue: 24.1,
+        nominalRange: [20, 28],
+        sampleRate: '50 Hz',
+        quality: 91.2,
+        status: 'NORMAL',
+        lastUpdated: '14:12:25',
+      },
+    ],
+    maintenanceHistory: [
+      {
+        id: 'MNT-875',
+        date: 'JUN 22',
+        title: 'Impeller Blade Fly-Ash Cleaning',
+        type: 'MAINTENANCE',
+        technician: 'Maintenance Shift A',
+        notes: 'High-pressure wash of accumulated particulate buildup on runner vanes.',
+        status: 'COMPLETED',
+      },
+      {
+        id: 'MNT-938',
+        date: 'AUG 19',
+        title: 'Dynamic Imbalance Alert Triggered',
+        type: 'CONDITION_SIGNAL',
+        notes: '1X rotational frequency amplitude jumped 2.4x baseline. Possible uneven ash deposition or runner wear.',
+        status: 'FLAGGED',
+      },
+      {
+        id: 'MNT-958',
+        date: 'AUG 26',
+        title: 'Strobe Optical Inspection Request',
+        type: 'ENGINEERING_REVIEW',
+        notes: 'Visual inspection requested during next scheduled 4-hour batch turnaround.',
+        status: 'PENDING_REVIEW',
+      },
+    ],
+  },
+];
+
+export const ANOMALY_INVESTIGATION_DATA: AnomalyInvestigation = {
+  id: 'INV-2026-0842',
+  assetId: 'PUMP-204',
+  assetName: 'Boiler Feed Pump 204',
+  signal: 'Drive-End Vibration Deviation (7.82 mm/s RMS)',
+  severity: 'REVIEW',
+  detectedAt: 'Today, 14:21:08 UTC',
+  summary:
+    'Vibration spectral signature shows harmonic excitation at 2X and 3.5X blade-pass frequencies correlated with bearing temperature rise (+6.2°C above baseline) under sustained 88% flow regime.',
+  evidence: [
+    'Progressive +38% upward trend in RMS vibration over past 72 operating hours.',
+    'Related temperature rise on DE bearing thermocouple from 68.0°C to 74.2°C.',
+    'Historical correlation: Similar signature preceded mechanical seal leakage on Line 03 Pump-102 (March 2025).',
+    'Maintenance correlation: Greasing logged on AUG 04; subsequent vibration profile did not settle back to baseline.',
+  ],
+  recommendedAction:
+    'Schedule vibration spectral demodulation & acoustic lubrication audit during next production changeover. Verify alignment between pump and motor coupling.',
+  correlatedSignals: [
+    { name: 'Bearing Temp DE', correlation: '+0.89 Pearson', trend: 'rising' },
+    { name: 'Motor Current draw', correlation: '+0.42 Pearson', trend: 'stable' },
+    { name: 'Discharge Flow', correlation: '-0.15 Pearson', trend: 'stable' },
+  ],
+};
+
+export const EDGE_GATEWAYS_DATA: EdgeGateway[] = [
+  {
+    id: 'GATEWAY-01',
+    name: 'Edge Node 01 — Line 04 High-Speed Collector',
+    location: 'MCC Room 4B (Plant A)',
+    status: 'CONNECTED',
+    bufferedPackets: 0,
+    latencyMs: 14,
+    throughput: '4.8 MB/s',
+    lastSync: 'Just now (0.4s ago)',
+    firmware: 'v2.8.4-edge-rt',
+  },
+  {
+    id: 'GATEWAY-02',
+    name: 'Edge Node 02 — Line 04 Drive & Power Telemetry',
+    location: 'VFD Cabinet 12 (Plant A)',
+    status: 'SYNCING',
+    bufferedPackets: 142,
+    latencyMs: 28,
+    throughput: '2.1 MB/s',
+    lastSync: 'Syncing batch (85% completed)',
+    firmware: 'v2.8.4-edge-rt',
+  },
+  {
+    id: 'GATEWAY-03',
+    name: 'Edge Node 03 — Line 05 Remote Exhaust Stack',
+    location: 'Outdoor Blower Platform (Plant A)',
+    status: 'STORE_AND_FORWARD',
+    bufferedPackets: 1840,
+    latencyMs: 184,
+    throughput: '0.6 MB/s',
+    lastSync: 'Buffered 1840 packets during radio mesh re-route',
+    firmware: 'v2.7.9-edge-lp',
+  },
+  {
+    id: 'GATEWAY-04',
+    name: 'Edge Node 04 — Plant A Primary Historian Bridge',
+    location: 'Control Center Server Room',
+    status: 'CONNECTED',
+    bufferedPackets: 0,
+    latencyMs: 12,
+    throughput: '12.4 MB/s',
+    lastSync: 'Just now (0.1s ago)',
+    firmware: 'v2.8.4-edge-rt',
+  },
+];
+
+// Helper to generate realistic 24-point time-series points
+export const generateTimeSeriesData = (baseTimeStr = '14:00'): TelemetryPoint[] => {
+  const points: TelemetryPoint[] = [];
+  const times = [
+    '13:40', '13:45', '13:50', '13:55', '14:00', '14:05', '14:10', '14:12', '14:14', '14:16', '14:18', '14:20',
+    '14:21:08', '14:22', '14:24', '14:26', '14:28', '14:30', '14:32', '14:34', '14:36', '14:38', '14:40', '14:45',
+  ];
+
+  times.forEach((t, i) => {
+    // Normal baseline initially, then deviation builds up around index 10-14
+    const isDev = i >= 11 && i <= 15;
+    const vibBase = isDev ? 6.5 + (i - 11) * 0.45 + (Math.sin(i * 1.5) * 0.3) : 2.8 + Math.sin(i * 0.8) * 0.6;
+    const tempBase = isDev ? 72.0 + (i - 11) * 0.8 : 66.0 + Math.cos(i * 0.5) * 1.4;
+    const pressBase = 42.0 + Math.sin(i * 0.3) * 1.2;
+    const flowBase = 320.0 + Math.cos(i * 0.4) * 8.0;
+    const ampBase = isDev ? 144.0 + Math.sin(i) * 2.5 : 138.0 + Math.sin(i) * 1.8;
+
+    points.push({
+      timestamp: t,
+      vibration: Number(vibBase.toFixed(2)),
+      temperature: Number(tempBase.toFixed(1)),
+      pressure: Number(pressBase.toFixed(1)),
+      flow: Number(flowBase.toFixed(1)),
+      motorCurrent: Number(ampBase.toFixed(1)),
+      isDeviation: isDev,
+      deviationNote: isDev ? (i === 12 ? 'Peak vibration excursion: 7.82 mm/s' : 'Deviation detected') : undefined,
+    });
+  });
+
+  return points;
+};
+
+export const FAQ_DATA = [
+  {
+    question: 'What is Telemora?',
+    answer:
+      'Telemora is an Industrial Telemetry Intelligence Platform designed to connect machine telemetry, asset relationships, operating states, and maintenance context. It gives plant engineers and reliability teams unified visibility into how equipment behavior evolves over time for informed decision support.',
+  },
+  {
+    question: 'What types of industrial telemetry can Telemora process?',
+    answer:
+      'Telemora processes continuous high-frequency time-series streams (such as high-sample-rate vibration, acoustics, motor current signature analysis, pressure, flow, and temperature) as well as discrete discrete operational events, batch recipe transitions, and edge gateway synchronization logs.',
+  },
+  {
+    question: 'How does Telemora connect signals to assets?',
+    answer:
+      'Rather than treating telemetry as disjoint sensor channels, Telemora structures all incoming signals into an equipment-first topological graph (Plant → Production Line → Machine Subsystem → Physical Sensor). Each telemetry frame is bound with asset metadata, active operational state, and maintenance history.',
+  },
+  {
+    question: 'Can Telemora work with IoT gateways and historians?',
+    answer:
+      'Yes. Telemora integrates seamlessly with edge gateways (MQTT, Sparkplug B, OPC UA, Modbus TCP), industrial historians (OSIsoft PI, Wonderware, Aveva), and SCADA message buses, supporting resilient store-and-forward edge buffering during network intermittency.',
+  },
+  {
+    question: 'How does anomaly intelligence work?',
+    answer:
+      'Telemora analyzes multi-sensor relationships, historical baseline trajectories, and operational state transitions to identify anomalous behavioral drift (e.g., harmonic excitation coupled with localized bearing temperature rise). It presents contextual evidence directly to engineers rather than triggering opaque black-box alerts.',
+  },
+  {
+    question: 'Can Telemora integrate maintenance information?',
+    answer:
+      'Yes. Telemora links CMMS and EAM maintenance logs (e.g., SAP PM, Maximo, Fiix), inspection records, bearing lubrications, and work orders directly onto the telemetry timeline, allowing engineers to correlate behavioral changes with physical maintenance interventions.',
+  },
+  {
+    question: 'Does Telemora control industrial equipment?',
+    answer:
+      'No. Telemora is strictly positioned as a telemetry intelligence and engineering decision-support platform. It does not replace industrial control systems (PLCs, DCS), certified safety instrumented functions (SIS/SIL), or human engineering judgment. All platform workflows terminate at engineering review.',
+  },
+  {
+    question: 'Can Telemora work with existing industrial systems?',
+    answer:
+      'Yes. Telemora operates as a non-intrusive telemetry intelligence layer that ingests from existing plant infrastructure, SCADA taps, and historian feeds without requiring modifications to existing safety loops or PLC control logic.',
+  },
+  {
+    question: 'Is edge processing supported?',
+    answer:
+      'Yes. Telemora supports edge-deployed inference and normalization containers designed for local telemetry windowing, filtering, and store-and-forward persistence when remote connectivity is constrained.',
+  },
+  {
+    question: 'Is an API available?',
+    answer:
+      'Yes. Telemora includes robust REST and streaming gRPC / WebSocket APIs for querying asset topologies, time-series windows, normalized condition signals, and investigation records into your enterprise engineering tools.',
+  },
+];

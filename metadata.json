@@ -1,0 +1,6 @@
+{
+  "name": "Telemora",
+  "description": "Industrial Telemetry Intelligence Platform converting machine signals into operational context for engineering decision support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
